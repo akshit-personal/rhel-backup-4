@@ -1,0 +1,23 @@
+- hosts: hadoop 
+  tasks:
+        - name: create hadoop folder
+          file:
+            path: /root/hadoop
+            state: directory
+        - name: Copying java and hadoop package
+          copy: 
+            src: "/root/Software/{{item}}"
+            dest: "/root/hadoop/{{item}}"
+          with_items:
+                  - jdk-8u281-linux-x64.rpm
+                  - hadoop-1.2.1-1.x86_64.rpm
+          register: x
+        
+        - name: Install java
+          command: "rpm -ivh /root/hadoop/jdk-8u281-linux-x64.rpm"
+          when: x.results[0].changed == true
+
+        - name: install hadoop 
+          command: "rpm -ivh /root/hadoop/hadoop-1.2.1-1.x86_64.rpm --force"
+          when: x.results[1].changed == true
+

@@ -1,0 +1,9 @@
+- hosts: all
+  tasks:
+    - package:
+        name: "httpd"
+        state: present
+      register: x
+    - debug:
+        var: x
+

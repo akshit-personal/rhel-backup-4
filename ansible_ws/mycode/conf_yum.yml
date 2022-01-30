@@ -1,0 +1,20 @@
+- hosts: 192.168.43.128
+  tasks:
+  - file:
+      path: "/dvd1"
+      state: directory 
+  - mount: 
+      src: "/dev/cdrom"
+      path: "/dvd1"
+      state: mounted
+      fstype: "iso9660"
+  - yum_repository:
+      baseurl: "/dvd1/AppStream"
+      name: "dvd1"
+      description: "Local dvd1"
+      gpgcheck: no
+     #- package
+            # - service
+            #
+
+  
